@@ -15,10 +15,6 @@ class MapScreen extends React.Component {
         <Text>
             MapScreen Here
         </Text>
-        <Button
-          title="Go to profile screen"
-          onPress={() => this.props.navigation.push('Profile')}
-        />
       </View>
     );
   }

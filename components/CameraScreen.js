@@ -8,7 +8,7 @@ import { RNCamera } from 'react-native-camera';
   uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
 };*/
 
-class Camera extends React.Component {
+class CameraScreen extends React.Component {
   state = {
     uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
   }
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Camera;
+export default CameraScreen;
