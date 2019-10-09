@@ -13,21 +13,41 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 
 const AppNavigator = createMaterialBottomTabNavigator(
   {
-    Camera: CameraScreen,
-    Map: MapScreen,
-    Profile: ProfileScreen,
+    Camera: {
+      screen: CameraScreen,
+      navigationOptions: {
+        tabBarLabel: 'Camera',
+        tabBarColor: '#1e1e1d',
+        tabBarIcon: <Icon size={26} color="white" name='camera'/>
+      }
+    },
+    Map: {
+      screen: MapScreen,
+      navigationOptions: {
+        tabBarLabel: 'Map',
+        tabBarColor: '#1e1e1d',
+        tabBarIcon: <Icon size={26} color="white" name='map'/>
+      }
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        tabBarLabel: 'Profile',
+        tabBarColor: '#1e1e1d',
+        tabBarIcon: <Icon size={26} color="white" name='account'/>
+      }
+    }
   },
   {
     initialRouteName: 'Profile',
-    activeColor: '#f0edf6',
+    activeColor: '#ffedf6',
     inactiveColor: '#3e2465',
-    barStyle: { backgroundColor: '#694fad' },
+    barStyle: { backgroundColor: '#f5b11d' },
     order: [ 'Map', 'Camera', 'Profile']
   }
 );
 
 const AppContainer = createAppContainer(AppNavigator);
-
 
 class App extends React.Component {
   render() {
