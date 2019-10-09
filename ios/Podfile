@@ -37,6 +37,7 @@ target 'frontend' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+
   target 'frontendTests' do
     inherit! :search_paths
     # Pods for testing
