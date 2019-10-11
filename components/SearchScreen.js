@@ -8,16 +8,16 @@ import { RNCamera } from 'react-native-camera';
   uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
 };*/
 
-class ProfileScreen extends React.Component {
+class SearchScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>
-            ProfileScreen Here
+            SearchScreen Here
         </Text>
       </View>
     );
   }
 };
 
-export default ProfileScreen;
+export default SearchScreen;

@@ -4,7 +4,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CameraScreen from './components/CameraScreen.js';
 import MapScreen from './components/MapScreen.js';
-import ProfileScreen from './components/ProfileScreen.js';
+import SearchScreen from './components/SearchScreen.js';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
@@ -29,21 +29,21 @@ const AppNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: <Icon size={26} color="white" name='map'/>
       }
     },
-    Profile: {
-      screen: ProfileScreen,
+    Search: {
+      screen: SearchScreen,
       navigationOptions: {
-        tabBarLabel: 'Profile',
+        tabBarLabel: 'Search',
         tabBarColor: '#1e1e1d',
-        tabBarIcon: <Icon size={26} color="white" name='account'/>
+        tabBarIcon: <Icon size={26} color="white" name='air-horn'/>
       }
     }
   },
   {
-    initialRouteName: 'Profile',
+    initialRouteName: 'Map',
     activeColor: '#ffedf6',
     inactiveColor: '#3e2465',
     barStyle: { backgroundColor: '#f5b11d' },
-    order: [ 'Map', 'Camera', 'Profile']
+    order: [ 'Map', 'Camera', 'Search']
   }
 );
 

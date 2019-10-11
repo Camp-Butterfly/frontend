@@ -3,22 +3,21 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { withNavigationFocus } from 'react-navigation';
 
 /*let pic = {
   uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
 };*/
 
 class CameraScreen extends React.Component {
-  state = {
-    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <Image source={this.state} style={{width: 193, height: 110}}/>
-        </View>
-        <RNCamera
+  renderCamera = () => {
+    console.log(this.props.navigation.isFocused())
+    const isActive = this.props.navigation.isFocused()
+    if(isActive == true) {
+      return(
+        <View style={styles.container}>
+        <Image source={this.state} style={{width: 193, height: 110}}/>
+          <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
@@ -33,13 +32,26 @@ class CameraScreen extends React.Component {
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
           }}
-        />
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
+          />
+          <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
+             <Text style={{ fontSize: 14 }}> SNAP </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      )
+    }
+    else {
+      return null
+    }
+  }
+  state = {
+    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+  }
+  
+  render() {
+    return (
+      this.renderCamera()
     );
   }
 
@@ -79,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CameraScreen;
+export default withNavigationFocus(CameraScreen);
