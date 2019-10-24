@@ -4,6 +4,32 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { withNavigationFocus } from 'react-navigation';
+import CameraRoll from "@react-native-community/cameraroll";
+import { PermissionsAndroid } from 'react-native';
+
+async function requestCameraRollPermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        title: 'Cool Photo App Camera Permission',
+        message:
+          'Cool Photo App needs access to your camera ' +
+          'so you can take awesome pictures.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can use the camera');
+    } else {
+      console.log('Camera permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+}
 
 /*let pic = {
   uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
@@ -63,8 +89,8 @@ class CameraScreen extends React.Component {
       this.setState({
         uri: data.uri
       });
-      console.log("uri: ", data.uri);
-      console.log("Picture Orientation: ", data.pictureOrientation);
+      requestCameraRollPermission();
+      CameraRoll.saveToCameraRoll(data.uri);
     }
   };
 }
