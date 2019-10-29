@@ -19,6 +19,27 @@ const styles = StyleSheet.create({
   },
 });
 
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function makeMarker () {
+  x = randomIntFromInterval(40.7600, 40.7700);
+  y = randomIntFromInterval(-73.9600, -73.9700);
+
+  coordinates = {
+    latitude: x,
+    longitude: y
+  }
+  return(
+    <Marker
+            coordinate={coordinates}
+            title= "Cool"
+            description= "Suppppper Coooool"
+    />
+  )
+}
+
 class MapScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,13 +49,48 @@ class MapScreen extends React.Component {
         longitude: -73.9645,
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121,
-      }
+      },
+      markers: [
+        {
+          coordinate: {
+            latitude: 40.7678, 
+            longitude: -73.9645
+          },
+          title: "Mehhh Squidward",
+          description: "MEHHHHH SQUIDWARDDDD"
+        },
+        {
+          coordinate: {
+            latitude: 40.7698, 
+            longitude: -73.9685
+          },
+          title: "Mehhh Squidward",
+          description: "MEHHHHH SQUIDWARDDDD"
+        },
+        {
+          coordinate: {
+            latitude: 40.7684, 
+            longitude: -73.9665
+          },
+          title: "Mehhh Squidward",
+          description: "MEHHHHH SQUIDWARDDDD"
+        },
+        {
+          coordinate: {
+            latitude: 40.7678, 
+            longitude: -73.9685
+          },
+          title: "Mehhh Squidward",
+          description: "MEHHHHH SQUIDWARDDDD"
+        },
+      ]
     };
   }
   onRegionChange = (region) => {
     this.setState({ region });
     console.log(region);
   }
+  
   render() {
     return (
       <View style={styles.container}>
@@ -44,14 +100,13 @@ class MapScreen extends React.Component {
           initialRegion={this.state.region}
           onRegionChange={this.onRegionChange}
         >
+        {this.state.markers.map(marker => (
           <Marker
-            coordinate={{ 
-              latitude: 40.7678, 
-              longitude: -73.9645
-            }}
-            title={"Mehhh Squidward"}
-            description={"MEHHHHH SQUIDWARDDDD"}
+            coordinate={marker.coordinate}
+            title={marker.title}
+            description={marker.description}
           />
+        ))}         
         </MapView>
    </View>
     );
