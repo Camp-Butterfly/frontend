@@ -4,9 +4,7 @@ import React from 'react';
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-/*let pic = {
-  uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-};*/
+import Geolocation from '@react-native-community/geolocation';
 
 const styles = StyleSheet.create({
   container: {
@@ -88,7 +86,9 @@ class MapScreen extends React.Component {
   }
   onRegionChange = (region) => {
     this.setState({ region });
-    console.log(region);
+    //console.log(region);
+    Geolocation.getCurrentPosition(info => console.log(info));
+
   }
   
   render() {
