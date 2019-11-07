@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
   },
 });
 
+let _mapView;
+
 function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -85,20 +87,50 @@ class MapScreen extends React.Component {
     };
   }
   onRegionChange = (region) => {
+    //console.log("REGION", region);
     this.setState({ region });
     //console.log(region);
-    Geolocation.getCurrentPosition(info => console.log(info));
+    //Geolocation.getCurrentPosition(info => console.log(info.coords.latitude));
+    //Geolocation.getCurrentPosition(info => console.log(info.coords.longitude));
+
 
   }
-  
+
+  center = () => {
+    console.log("Center Button Pressed");
+    let _info;
+    Geolocation.getCurrentPosition(info => _info = info)
+      
+    _mapView.animateCamera({
+        latitude: _info.coords.latitude,
+        longitude: _info.coords.longitude
+    }, 1000);
+      /*let changedLocation = {
+        latitude: info.coords.latitude,
+        latitudeDelta: this.state.region.latitudeDelta,
+        longitude: info.coords.longitude,
+        longitudeDelta: this.state.region.longitudeDelta
+      }
+      console.log(changedLocation);
+      this.setState({region: changedLocation});
+      console.log(this.state.region)*/
+     // {"latitude": 40.7651832514949, 
+     // "latitudeDelta": 0.016988027439730047, 
+    //  "longitude": -73.96668506786227,
+      // "longitudeDelta": 0.012099780142307281}
+      //this.onRegionChange(info.coords)
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <MapView
+          ref = {(mapView) => { _mapView = mapView; }}
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={this.state.region}
           onRegionChange={this.onRegionChange}
+          showsUserLocation={true}
         >
         {this.state.markers.map(marker => (
           <Marker
@@ -108,6 +140,7 @@ class MapScreen extends React.Component {
           />
         ))}         
         </MapView>
+        
    </View>
     );
   }
