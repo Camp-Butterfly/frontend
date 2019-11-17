@@ -31,14 +31,11 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   snapButton: {
-    borderWidth:1,
-    borderColor:'rgba(0,0,0,0.2)',
-    alignItems:'center',
-    justifyContent:'center',
-    width:100,
-    height:100,
-    backgroundColor:'#fff',
-    borderRadius:50,
+    padding: 5,
+    height: 60,
+    width: 60,  //The Width must be the same as the height
+    borderRadius: 120, //Then Make the Border Radius twice the size of width or Height   
+    backgroundColor:'rgb(255, 255, 255)',
   },
 });
 
@@ -166,35 +163,24 @@ class CameraScreen extends React.Component {
         <View style={styles.container}>
         <Image source={this.state} style={{width: 193, height: 110}}/>
           <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          // Specifies that we are using the back camera
-          type={RNCamera.Constants.Type.back}
-          // Determines if we are using flash
-          flashMode={RNCamera.Constants.FlashMode.off}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
+            ref={ref => {
+              this.camera = ref;
+            }}
+            style={styles.preview}
+            // Specifies that we are using the back camera
+            type={RNCamera.Constants.Type.back}
+            // Determines if we are using flash
+            flashMode={RNCamera.Constants.FlashMode.off}
+            androidCameraPermissionOptions={{
+              title: 'Permission to use camera',
+              message: 'We need your permission to use your camera',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
           />
           <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-             <Text> SNAP </Text>
+            <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.snapButton}>
             </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            {photo && (
-            <Image
-            source={{ uri: photo.uri }}
-            style={{ width: 100, height: 100 }}
-            />
-            )}
-          <Button title="Choose Photo" onPress={this.handleChoosePhoto} />
-          <Button title="Test Upload" onPress={this.upload} />
           </View>
         </View>
       )
