@@ -31,8 +31,12 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   snapButton: {
-    padding: 5,
-    height: 60,
+    position: 'absolute',
+    bottom: 15,
+    padding: 16,
+    borderRadius: 20,
+    alignItems: 'center',
+    height: 60, //Size of button
     width: 60,  //The Width must be the same as the height
     borderRadius: 120, //Then Make the Border Radius twice the size of width or Height   
     backgroundColor:'rgb(255, 255, 255)',
@@ -154,14 +158,12 @@ class CameraScreen extends React.Component {
   };
 
   renderCamera = () => {
-    const { photo } = this.state;
-
     console.log(this.props.navigation.isFocused())
     const isActive = this.props.navigation.isFocused()
     if(isActive == true) {
       return(
         <View style={styles.container}>
-        <Image source={this.state} style={{width: 193, height: 110}}/>
+          <Image source={this.state} style={{width: 193, height: 110}}/>
           <RNCamera
             ref={ref => {
               this.camera = ref;
