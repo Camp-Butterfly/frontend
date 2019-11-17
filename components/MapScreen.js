@@ -90,8 +90,8 @@ class MapScreen extends React.Component {
     //console.log("REGION", region);
     this.setState({ region });
     //console.log(region);
-    //Geolocation.getCurrentPosition(info => console.log(info.coords.latitude));
-    //Geolocation.getCurrentPosition(info => console.log(info.coords.longitude));
+    Geolocation.getCurrentPosition(info => console.log(info));
+    Geolocation.getCurrentPosition(info => console.log(info.coords.longitude));
 
 
   }
@@ -100,7 +100,7 @@ class MapScreen extends React.Component {
     console.log("Center Button Pressed");
     let _info;
     Geolocation.getCurrentPosition(info => _info = info)
-      
+    
     _mapView.animateCamera({
         latitude: _info.coords.latitude,
         longitude: _info.coords.longitude
@@ -140,7 +140,6 @@ class MapScreen extends React.Component {
           />
         ))}         
         </MapView>
-        
    </View>
     );
   }
