@@ -123,40 +123,6 @@ class CameraScreen extends React.Component {
       });
   };
 
-  handleChoosePhoto = () => {
-    const options = {
-      noData: true,
-    };
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.uri) {
-        const data = {
-          fileName: response.fileName,
-          type: response.type,
-          uri: response.uri,
-        }
-        //this.setState({ photo.filename: response });
-        this.handleUploadPhot2(data);
-      }
-    });
-  };
-
-  upload = () => {
-    fetch('http://146.95.74.249:3000/api/upload', {
-      method: 'POST',
-      body: JSON.stringify({ x: 5, y: 6 }),
-    })
-      .then(response => response.text())
-      .then(response => {
-        console.log('upload success', response);
-        alert('Upload success!');
-        this.setState({ photo: null });
-      })
-      .catch(error => {
-        console.log('upload error', error);
-        alert('Upload failed!');
-      });
-  };
-
   renderCamera = () => {
     console.log(this.props.navigation.isFocused())
     const isActive = this.props.navigation.isFocused()
@@ -195,17 +161,30 @@ class CameraScreen extends React.Component {
   //portrait", "portraitUpsideDown", "landscapeLeft" or "landscapeRight
   takePicture = async() => {
     if (this.camera) {
-      const options = { quality: 1, base64: true, orientation: "portraitUpsideDown" };
+      // FIx orenitation is android only so put android only code here
+      let options;
+      if (Platform.OS === 'android'){
+        options = { quality: 1, base64: true, orientation: "portrait", fixOrientation: true };
+      }
+      else{
+        options = { quality: 1, base64: true, orientation: "portrait" };
+      }
       const data = await this.camera.takePictureAsync(options);
+      console.log(data, '\n\n\n\n\n\n');
+      this.props.navigation.navigate("Crop",
+      {
+        uri: data.uri,
+        height: data.height,
+        width: data.width
+      });
+      //AppNavigator.navigate("Crop");
       this.setState({
         uri: data.uri
       });
-
       // let _info;
-
       //requestCameraRollPermission();
       //CameraRoll.saveToCameraRoll(data.uri);
-      Geolocation.getCurrentPosition(info => this.handleUploadPhoto(data.base64, info.coords.latitude, info.coords.longitude));
+      //Geolocation.getCurrentPosition(info => this.handleUploadPhoto(data.base64, info.coords.latitude, info.coords.longitude));
     }
   };
   

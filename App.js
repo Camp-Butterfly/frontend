@@ -5,6 +5,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CameraScreen from './components/CameraScreen.js';
 import MapScreen from './components/MapScreen.js';
 import SearchScreen from './components/SearchScreen.js';
+import CropScreen from './components/CropScreen.js';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
@@ -14,7 +15,15 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 const AppNavigator = createMaterialBottomTabNavigator(
   {
     Camera: {
-      screen: CameraScreen,
+      screen: createStackNavigator({
+        Camera: { screen: CameraScreen },
+        Crop: { screen: CropScreen },
+      },{
+        headerMode: 'none',
+        navigationOptions: {
+          headerVisible: false,
+        }
+      }),     
       navigationOptions: {
         tabBarLabel: 'Camera',
         tabBarColor: '#1e1e1d',
