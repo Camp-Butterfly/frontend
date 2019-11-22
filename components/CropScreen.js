@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AmazingCropper from 'react-native-amazing-cropper';
 import ImageRotate from 'react-native-image-rotate';
+import CustomCropperFooter from './CustomCropperFooter.js';
 
 class CropScreen extends Component {
 
@@ -35,6 +36,7 @@ class CropScreen extends Component {
   render() {
     return (
       <AmazingCropper
+        footerComponent={<CustomCropperFooter />}
         onDone={this.onDone}
         onCancel={this.onCancel}
         imageUri={this.props.navigation.getParam('uri')}
