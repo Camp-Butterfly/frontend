@@ -129,7 +129,6 @@ class CameraScreen extends React.Component {
     if(isActive == true) {
       return(
         <View style={styles.container}>
-          <Image source={this.state} style={{width: 193, height: 110}}/>
           <RNCamera
             ref={ref => {
               this.camera = ref;
