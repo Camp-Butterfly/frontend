@@ -159,8 +159,8 @@ class CameraScreen extends React.Component {
   
   //portrait", "portraitUpsideDown", "landscapeLeft" or "landscapeRight
   takePicture = async() => {
+    console.log("Capture Button Pressed");
     if (this.camera) {
-      // FIx orenitation is android only so put android only code here
       let options;
       if (Platform.OS === 'android'){
         options = { quality: 1, base64: true, orientation: "portrait", fixOrientation: true };
@@ -169,17 +169,49 @@ class CameraScreen extends React.Component {
         options = { quality: 1, base64: true, orientation: "portrait" };
       }
       const data = await this.camera.takePictureAsync(options);
-      console.log(data, '\n\n\n\n\n\n');
-      this.props.navigation.navigate("Crop",
-      {
-        uri: data.uri,
-        height: data.height,
-        width: data.width
-      });
+     
+      // Code taken from documentation
+      // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+      const geo_options = {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 0
+      };
+      
+      const success = pos => {
+        var crd = pos.coords;
+      
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+
+        this.props.navigation.navigate("Crop",
+        {
+          uri: data.uri,
+          height: data.height,
+          width: data.width,
+          lat: crd.latitude,
+          lon: crd.longitude
+        });
+      }
+      
+      const error = err => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+
+      await Geolocation.getCurrentPosition(success, error, geo_options);
+
+      //this.props.navigation.navigate("Crop",
+      //{
+      //  uri: data.uri,
+      //  height: data.height,
+      //  width: data.width
+      //});
       //AppNavigator.navigate("Crop");
-      this.setState({
-        uri: data.uri
-      });
+      //this.setState({
+      //  uri: data.uri
+      //});
       // let _info;
       //requestCameraRollPermission();
       //CameraRoll.saveToCameraRoll(data.uri);

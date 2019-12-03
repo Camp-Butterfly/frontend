@@ -3,11 +3,38 @@ import AmazingCropper from 'react-native-amazing-cropper';
 import ImageRotate from 'react-native-image-rotate';
 import CustomCropperFooter from './CustomCropperFooter.js';
 import { Text, Alert, TouchableOpacity } from 'react-native';
+import RNFS from 'react-native-fs';
+
 
 class CropScreen extends Component {
+  handleUploadPhoto = (b64, lat, lon) => {
+    console.log("Sending");
+    fetch('https://enigmatic-spire-53426.herokuapp.com/api/v1/images', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        image_content: b64,
+        latitude: lat,
+        longitude: lon,
+      })
+    })
+      .then(response => response.text())
+      .then(response => {
+        console.log('upload success', response);
+        alert('Upload success!');
+      })
+      .catch(error => {
+        console.log('upload error', error);
+        alert('Upload failed!');
+      });
+  };
+  
   onDone = (croppedImageUri) => {
     console.log('Done button was pressed');
-
+    
     Alert.alert(
       'Confirmation Message',
       'Is this your final crop?',
@@ -16,7 +43,12 @@ class CropScreen extends Component {
           console.log('No Pressed');
         }, style: 'cancel'},
         {text: 'YES', onPress: () => {
-          console.warn('YES Pressed');
+          console.log('Yes Pressed');
+          RNFS.readFile(croppedImageUri, 'base64')
+          .then(res =>{
+            this.handleUploadPhoto(res, this.props.navigation.getParam('lat'), this.props.navigation.getParam('lon'))
+          });
+          this.props.navigation.goBack();
         }},
       ]
     );
@@ -48,6 +80,12 @@ class CropScreen extends Component {
   }
 
   render() {
+    console.log(this.props.navigation.getParam('uri'));
+    console.log(this.props.navigation.getParam('height'));
+    console.log(this.props.navigation.getParam('width'));
+    console.log(this.props.navigation.getParam('lat'));
+    console.log(this.props.navigation.getParam('lon'));
+
     return (
       <AmazingCropper
         footerComponent={<CustomCropperFooter />}

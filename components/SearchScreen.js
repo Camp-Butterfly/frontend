@@ -2,7 +2,6 @@
 'use strict';
 import React from 'react';
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { RNCamera } from 'react-native-camera';
 import { SearchBar } from 'react-native-elements';
 
 class SearchScreen extends React.Component {
