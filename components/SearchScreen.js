@@ -3,6 +3,7 @@
 import React from 'react';
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import axios from 'axios';
 
 class SearchScreen extends React.Component {
   state = {
@@ -11,6 +12,18 @@ class SearchScreen extends React.Component {
 
   updateSearch = search => {
     this.setState({ search });
+
+    let endpoint = "https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json";
+    axios.get(endpoint, {
+      params: {
+        butterfly_name: search
+      }
+    })
+    .then(result => {
+      //this.setState({result:result.data});
+      console.log(result.data);
+    });
+    
   };
 
   render() {
