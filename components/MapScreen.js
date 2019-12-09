@@ -5,6 +5,7 @@ import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-n
 import { RNCamera } from 'react-native-camera';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import axios from 'axios';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,9 +34,9 @@ function makeMarker () {
   }
   return(
     <Marker
-            coordinate={coordinates}
-            title= "Cool"
-            description= "Suppppper Coooool"
+      coordinate={coordinates}
+      title= "Cool"
+      description= "Suppppper Coooool"
     />
   )
 }
@@ -121,6 +122,16 @@ class MapScreen extends React.Component {
       //this.onRegionChange(info.coords)
   }
 
+  get_that = () => {
+    console.log("Button pressed")
+    let endpoint = "https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json";
+    axios.get(endpoint)
+    .then(result => {
+      //this.setState({result:result.data});
+      console.log(JSON.stringify(result.data));
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -137,10 +148,17 @@ class MapScreen extends React.Component {
             coordinate={marker.coordinate}
             title={marker.title}
             description={marker.description}
-          />
+          >
+            <Image source={require('../images/Monarch.jpeg')} style={{height: 60, width: 60, borderRadius: 120, borderWidth: 3,
+    borderColor: '#fff'}}/>
+          </Marker>
         ))}         
         </MapView>
-   </View>
+        <Button
+          title="Left button"
+          onPress={this.get_that}
+        />
+      </View>
     );
   }
 };

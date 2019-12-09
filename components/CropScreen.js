@@ -9,7 +9,7 @@ import RNFS from 'react-native-fs';
 class CropScreen extends Component {
   handleUploadPhoto = (b64, lat, lon) => {
     console.log("Sending");
-    fetch('https://enigmatic-spire-53426.herokuapp.com/api/v1/images', {
+    fetch('https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

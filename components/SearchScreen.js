@@ -13,10 +13,11 @@ class SearchScreen extends React.Component {
   updateSearch = search => {
     this.setState({ search });
 
-    let endpoint = "https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json";
+    let endpoint = "https://enigmatic-spire-53426.herokuapp.com/api/v1/butterflies.json";
+    console.log("Word: ", search.toLowerCase())
     axios.get(endpoint, {
       params: {
-        butterfly_name: search
+        butterfly_name: search.toLowerCase()
       }
     })
     .then(result => {

@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 15,
     padding: 16,
-    borderRadius: 20,
     alignItems: 'center',
     height: 60, //Size of button
     width: 60,  //The Width must be the same as the height
