@@ -128,11 +128,23 @@ class MapScreen extends React.Component {
     axios.get(endpoint)
     .then(result => {
       //this.setState({result:result.data});
-      console.log(JSON.stringify(result.data));
+      this.setState({ markers: result.data });
+      console.log(this.state.markers);
     });
   }
 
+  /*<Marker
+    coordinate={marker.coordinate}
+    title={marker.title}
+    description={marker.description}
+  >
+    <Image source={{uri: basey}} style={{height: 60, width: 60, borderRadius: 120, borderWidth: 3, borderColor: '#fff'}}/>
+  </Marker>*/
+
   render() {
+    // data:image/png;base64,
+    // Append that to all base 64
+    
     return (
       <View style={styles.container}>
         <MapView
@@ -143,16 +155,30 @@ class MapScreen extends React.Component {
           onRegionChange={this.onRegionChange}
           showsUserLocation={true}
         >
-        {this.state.markers.map(marker => (
-          <Marker
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={marker.description}
-          >
-            <Image source={require('../images/Monarch.jpeg')} style={{height: 60, width: 60, borderRadius: 120, borderWidth: 3,
-    borderColor: '#fff'}}/>
-          </Marker>
-        ))}         
+        {this.state.markers.map(marker => {
+          if( !marker.latitude || !marker.longitude || !marker.image_content ){
+            return null;
+          }
+          if( marker.image_content.length < 100){
+            return null;
+          }
+  
+          const marker_coordinate = {
+            latitude: parseFloat(marker.latitude),
+            longitude: parseFloat(marker.longitude),
+          }
+          const marker_uri = "data:image/png;base64," + marker.image_content;
+
+          return (
+            <Marker
+              coordinate={marker_coordinate}
+              //title={marker.title}
+              //description={marker.description}
+            >
+              <Image source={{uri: marker_uri }} style={{height: 60, width: 60, borderRadius: 120, borderWidth: 3, borderColor: '#fff'}}/>
+            </Marker>
+          )
+        })}
         </MapView>
         <Button
           title="Left button"
@@ -172,3 +198,4 @@ export default MapScreen;
   description="MEHHHHH SQUIDWARDDDD"
 />
 */
+
