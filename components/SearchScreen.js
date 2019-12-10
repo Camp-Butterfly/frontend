@@ -11,27 +11,38 @@ const styles = StyleSheet.create({
    // justifyContent:'flex-end',
   },
   scrollView: {
-    backgroundColor: 'pink',
-    marginBottom: 67
+    //backgroundColor: 'pink',
   },
   title: {
     //textAlign: 'center', // <-- the magic
-    padding: 20,
-    fontSize: 40,
-    fontWeight: "bold"
+    fontFamily: 'Futura',
+    padding: 17,
+    fontSize: 28,
+    fontWeight: "bold",
+    color: '#474747',
+    backgroundColor: "#ffeecf"
   },
   image: {
-    flex: 0
+    width: '100%',
+    height: 300
   },
   caption: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
+    fontFamily: 'Futura',
+    //flex: 0,
+    //backgroundColor: '#fff',
+    //borderRadius: 5,
+    padding: 17,
+    //paddingHorizontal: 20,
+    //alignSelf: 'center',
+    //margin: 20,
   },
+  description: {
+    paddingTop: 17,
+    paddingLeft: 17,
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#fcb83d',
+  }
 });
 
 class SearchScreen extends React.Component {
@@ -85,17 +96,22 @@ class SearchScreen extends React.Component {
 
   render() {
     const { search } = this.state;
+    
 
     return (
-      <View styles={styles.image}>
+      <View styles={styles.container}>
         <SearchBar
-          placeholder="Type Here..."
+          inputContainerStyle={{backgroundColor: 'white'}}
+          // inputStyle={{backgroundColor: 'white'}}
+          // containerStyle={{backgroundColor: 'white', borderWidth: 1, borderRadius: 5}}
+          placeholder="Search"
           onChangeText={this.updateSearch}
           value={search}
         />
         <ScrollView style={styles.scrollView}>
           <Image style={styles.image} source={this.state.picture}/>
           <Text style={styles.title}>{this.state.name}</Text>
+          <Text style={styles.description}>Description</Text>
           <Text style={styles.caption}>{this.state.description}</Text>
         </ScrollView>
       </View>
