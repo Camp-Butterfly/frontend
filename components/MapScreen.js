@@ -1,9 +1,9 @@
 // This mode disables usage of variables that are not declared
 'use strict';
 import React from 'react';
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View, TouchableHighlight } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 
@@ -19,27 +19,6 @@ const styles = StyleSheet.create({
 });
 
 let _mapView;
-
-function randomIntFromInterval(min, max) { // min and max included 
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function makeMarker () {
-  x = randomIntFromInterval(40.7600, 40.7700);
-  y = randomIntFromInterval(-73.9600, -73.9700);
-
-  coordinates = {
-    latitude: x,
-    longitude: y
-  }
-  return(
-    <Marker
-      coordinate={coordinates}
-      title= "Cool"
-      description= "Suppppper Coooool"
-    />
-  )
-}
 
 class MapScreen extends React.Component {
   constructor(props) {
@@ -92,9 +71,6 @@ class MapScreen extends React.Component {
     this.setState({ region });
     //console.log(region);
     Geolocation.getCurrentPosition(info => console.log(info));
-    Geolocation.getCurrentPosition(info => console.log(info.coords.longitude));
-
-
   }
 
   center = () => {
@@ -129,7 +105,7 @@ class MapScreen extends React.Component {
     .then(result => {
       //this.setState({result:result.data});
       this.setState({ markers: result.data });
-      console.log(this.state.markers);
+      console.log( this.state.markers );
     });
   }
 
@@ -171,10 +147,11 @@ class MapScreen extends React.Component {
 
           return (
             <Marker
+              key={marker.id}
               coordinate={marker_coordinate}
               //title={marker.title}
               //description={marker.description}
-            >
+            >            
               <Image source={{uri: marker_uri }} style={{height: 60, width: 60, borderRadius: 120, borderWidth: 3, borderColor: '#fff'}}/>
             </Marker>
           )

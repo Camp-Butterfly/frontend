@@ -7,21 +7,21 @@ import axios from 'axios';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
    // justifyContent:'flex-end',
   },
   scrollView: {
     backgroundColor: 'pink',
     marginBottom: 67
-
-    //marginHorizontal: 20,
   },
   title: {
-    textAlign: 'center', // <-- the magic
-    fontSize: 50,
+    //textAlign: 'center', // <-- the magic
+    padding: 20,
+    fontSize: 40,
+    fontWeight: "bold"
   },
   image: {
-    flex:0.8
+    flex: 0
   },
   caption: {
     flex: 0,
@@ -55,7 +55,10 @@ class SearchScreen extends React.Component {
     .then(result => {
       //this.setState({result:result.data});
       console.log(result.data);
-      this.setState({ name: result.data.butterfly_name });
+      let butterfly_name = result.data.butterfly_name;
+      // Convert first letter to uppercase
+      butterfly_name = butterfly_name.substring(0, 1).toUpperCase() + butterfly_name.substring(1);
+      this.setState({ name: butterfly_name });
       this.setState({ description: result.data.description });
       switch(result.data.butterfly_name){
         case 'monarch':
@@ -91,8 +94,8 @@ class SearchScreen extends React.Component {
           value={search}
         />
         <ScrollView style={styles.scrollView}>
-          <Text style={styles.title}>{this.state.name}</Text>
           <Image style={styles.image} source={this.state.picture}/>
+          <Text style={styles.title}>{this.state.name}</Text>
           <Text style={styles.caption}>{this.state.description}</Text>
         </ScrollView>
       </View>
