@@ -1,7 +1,7 @@
 // This mode disables usage of variables that are not declared
 'use strict';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, Button, ActivityIndicator } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { withNavigationFocus } from 'react-navigation';
 import CameraRoll from "@react-native-community/cameraroll";
@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
     borderRadius: 120, //Then Make the Border Radius twice the size of width or Height   
     backgroundColor:'rgb(255, 255, 255)',
   },
+  loading: {
+    position: 'absolute', 
+    top: 0, left: 0, 
+    right: 0, bottom: 0, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
 });
 
 async function requestCameraRollPermission() {
@@ -66,24 +73,6 @@ async function requestCameraRollPermission() {
   }
 }
 
-const createFormData = uri => {
-  var data = new FormData();
-
-  data.append("photo", {
-    name: uri.fileName,
-    type: uri.type,
-    uri:
-      Platform.OS === 'android' ? uri.uri : uri.uri.replace('file://', ''),
-  });
-
-  // This is for adding shit to the body of the request
-  /*Object.keys(body).forEach(key => {
-    data.append(key, body[key]);
-  });*/
-
-  return data;
-};
-
 class CameraScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -91,7 +80,8 @@ class CameraScreen extends React.Component {
       photo: {
         fileName: "",
         type: "",
-        uri: ""
+        uri: "",
+        loading: false
       },
       uri: "https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg"
     };
@@ -148,6 +138,12 @@ class CameraScreen extends React.Component {
             <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.snapButton}>
             </TouchableOpacity>
           </View>
+          {this.state.loading === true ? (
+          <View style={styles.loading}>
+          <ActivityIndicator size={75} color="#2f9ac4" />
+          </View>
+          ) : null }
+          
         </View>
       )
     }
@@ -158,6 +154,7 @@ class CameraScreen extends React.Component {
   
   //portrait", "portraitUpsideDown", "landscapeLeft" or "landscapeRight
   takePicture = async() => {
+    this.setState({ loading: true });
     console.log("Capture Button Pressed");
     if (this.camera) {
       let options;
@@ -216,6 +213,7 @@ class CameraScreen extends React.Component {
       //CameraRoll.saveToCameraRoll(data.uri);
       //Geolocation.getCurrentPosition(info => this.handleUploadPhoto(data.base64, info.coords.latitude, info.coords.longitude));
     }
+    this.setState({ loading: false });
   };
   
   render() {

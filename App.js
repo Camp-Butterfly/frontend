@@ -36,7 +36,7 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
           tabBarLabel: 'Search',
           tabBarColor: '#1e1e1d',
-          tabBarIcon: <Icon size={26} color="white" name='air-horn'/>
+          tabBarIcon: <Icon size={26} color="white" name='magnify'/>
         }
       }
     },
@@ -44,7 +44,7 @@ const AppNavigator = createStackNavigator({
       initialRouteName: 'Map',
       activeColor: '#ffedf6',
       inactiveColor: '#3e2465',
-      barStyle: { backgroundColor: '#f5b11d' },
+      barStyle: { backgroundColor: '#e081fc' },
       order: [ 'Map', 'Camera', 'Search']
     }
   ),

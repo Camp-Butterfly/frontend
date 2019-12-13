@@ -66,6 +66,17 @@ class MapScreen extends React.Component {
       ]
     };
   }
+
+  componentWillMount(){
+    console.log("Component Mounted")
+    let endpoint = "https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json";
+    axios.get(endpoint)
+    .then(result => {
+      //this.setState({result:result.data});
+      this.setState({ markers: result.data });
+      console.log( this.state.markers );
+    });
+  }
   onRegionChange = (region) => {
     //console.log("REGION", region);
     this.setState({ region });
@@ -157,22 +168,9 @@ class MapScreen extends React.Component {
           )
         })}
         </MapView>
-        <Button
-          title="Left button"
-          onPress={this.get_that}
-        />
       </View>
     );
   }
 };
 
 export default MapScreen;
-
-/*
-<Marker
-  coordinate=(40.7687, -74.1231)
-  title="Mehhh Squidward"
-  description="MEHHHHH SQUIDWARDDDD"
-/>
-*/
-

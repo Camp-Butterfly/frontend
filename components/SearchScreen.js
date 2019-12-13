@@ -7,8 +7,8 @@ import axios from 'axios';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-   // justifyContent:'flex-end',
+    flex: 1,
+    // justifyContent:'flex-end',
   },
   scrollView: {
     //backgroundColor: 'pink',
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     //paddingHorizontal: 20,
     //alignSelf: 'center',
     //margin: 20,
+    paddingBottom:70
   },
   description: {
     paddingTop: 17,
@@ -72,7 +73,7 @@ class SearchScreen extends React.Component {
       this.setState({ name: butterfly_name });
       this.setState({ description: result.data.description });
       switch(result.data.butterfly_name){
-        case 'monarch':
+        case 'milkweed':
           this.setState({ picture: require('../images/Monarch.jpeg') })
           break;
         case 'sulphur':
@@ -96,7 +97,7 @@ class SearchScreen extends React.Component {
 
   render() {
     const { search } = this.state;
-    
+
 
     return (
       <View styles={styles.container}>
@@ -108,12 +109,15 @@ class SearchScreen extends React.Component {
           onChangeText={this.updateSearch}
           value={search}
         />
-        <ScrollView style={styles.scrollView}>
+        {this.state.name.length > 0 ? (
+          <ScrollView style={styles.scrollView}>
           <Image style={styles.image} source={this.state.picture}/>
           <Text style={styles.title}>{this.state.name}</Text>
           <Text style={styles.description}>Description</Text>
           <Text style={styles.caption}>{this.state.description}</Text>
-        </ScrollView>
+          </ScrollView>
+        ) : null }
+        
       </View>
     );
   }
