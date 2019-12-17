@@ -89,7 +89,7 @@ class CameraScreen extends React.Component {
 
   handleUploadPhoto = (b64, lat, lon) => {
     console.log("Sending");
-    fetch('https://enigmatic-spire-53426.herokuapp.com/api/v1/images', {
+    fetch('http://146.95.184.180:5000/api/v1/model', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

@@ -111,12 +111,13 @@ class MapScreen extends React.Component {
 
   get_that = () => {
     console.log("Button pressed")
-    let endpoint = "https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json";
+    let endpoint = "http://146.95.184.180:5000";
     axios.get(endpoint)
     .then(result => {
       //this.setState({result:result.data});
-      this.setState({ markers: result.data });
-      console.log( this.state.markers );
+      //this.setState({ markers: result.data });
+      //console.log( this.state.markers );
+      console.log(result);
     });
   }
 
@@ -168,6 +169,12 @@ class MapScreen extends React.Component {
           )
         })}
         </MapView>
+        <Button
+        title="Press me"
+        onPress={this.get_that}
+        />
+
+        
       </View>
     );
   }

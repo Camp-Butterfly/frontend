@@ -9,7 +9,7 @@ import RNFS from 'react-native-fs';
 class CropScreen extends Component {
   handleUploadPhoto = (b64, lat, lon) => {
     console.log("Sending");
-    fetch('https://enigmatic-spire-53426.herokuapp.com/api/v1/images.json', {
+    fetch('http://146.95.184.180:5000/api/v1/model', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -23,7 +23,22 @@ class CropScreen extends Component {
     })
       .then(response => response.text())
       .then(response => {
+        let answer = "Your butterfly is ";
         console.log('upload success', response);
+
+        if (response === 0) {
+          answer += "cabbage";
+        }
+        else if (response == 1) {
+          answer += "ringlet";
+        }
+        else if (response == 2) {
+          answer += "sulphur";
+        }
+        else if (response == 3) {
+          answer += "milkweed";
+        }
+        alert(answer);
         alert('Upload success!');
       })
       .catch(error => {
